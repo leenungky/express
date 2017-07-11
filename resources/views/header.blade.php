@@ -67,6 +67,6 @@
 
 <div class="row">
         <div class="col-md-12">
-            <div class="status-barang">{{$type}}</strong></div>
+            <div class="status-barang">{{ucwords(str_replace("_"," ",$type))}}</strong></div>
         </div>          
     </div>
