@@ -32,7 +32,8 @@
 		<div class="row">				
 			<div class="col-md-12">		
 				<form method="post" action="/user/create" class="formsubmit">
-					<input type="hidden" name="_token" value="{{ csrf_token() }}">					
+					<input type="hidden" name="_token" value="{{ csrf_token() }}">	
+					<input type="hidden" name="city_id"/>					
 					<div class="form-group">
 					    <label for="email">Firstname</label>
 						 <input type="text" class="form-control" id="firstname" name="firstname" placeholder="input username" value="{{ old('username') }}" required>
@@ -53,7 +54,11 @@
 								<option value="{{$value->id}}">{{$value->name}}</option>
 							@endforeach
 						</select>
-					</div>					
+					</div>
+					<div class="form-group kecamatan-new-user">
+					    <label for="email">Kecamatan</label>
+						<input type="text" class="form-control" id="city" name="kecamatan" placeholder="input kecamatan" value="{{ old('kecamatan') }}" required>
+					</div>	
 					<div class="form-group">
 					    <label for="pwd">Password:</label>
 					    <input type="text" class="form-control" name="password" placeholder="input password" value="{{ old('password') }}" required>
@@ -76,7 +81,14 @@
 	$(document).ready(function(){	
 		$( "input[name=name]" ).focus();
 		$("select[name='role']").change(function(){
-
+			var role = $("select[name='role'] option:selected").text();
+			if (role=="staff"){
+				$(".kecamatan-new-user").show();
+			}else{
+				$(".kecamatan-new-user").hide();
+				$("input[name='city_id']").val("");
+				$("input[name='kecamatan']").val("");
+			}
 		})
 	});
 </script>

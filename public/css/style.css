@@ -118,9 +118,14 @@
 
 #dropdownMenu1{
 	background: #FFF;	
+	cursor: pointer !important;
 }
 
-.dropdown.open{
+.col-top-menu1 .dropdown.open{
+	cursor: pointer;
+}
+
+.col-top-menu-user .dropdown.open{
 	width: 50%;
   	float: right;
   	height: 27px;
@@ -308,64 +313,9 @@ ul.ui-autocomplete {
   font-size: 20px;
 }
 
-.sum-outbound{
-  background: #fabb3d;
-  text-align: center;
-  color: #FFF;
-  padding: 20px;
-  font-size: 20px;
-}
-
-.sum-not_outbound{
-  background: #79c447;
-  text-align: center;
-  color: #FFF;
-  padding: 20px;
-  font-size: 20px;
-}
-
-.sum-inbound .number, .sum-outbound .number, .sum-not_outbound .number{
-	font-size: 50px;
-}
-
-.chart{
-	border: 1px solid #CCC;
-  	padding: 40px;
-}
-
-.courier-chart{
-	width: 100%;
-}
-
-.label-chart{
-	font-size: 20px;
-  	font-weight: bolder;
-}
 
 
-.donut-legend > span {
-  display: inline-block;
-  margin-right: 25px;
-  margin-bottom: 10px;
-  font-size: 13px;
-}
-.donut-legend > span:last-child {
-  margin-right: 0;
-}
-.donut-legend > span > i {
-  display: inline-block;
-  width: 15px;
-  height: 15px;
-  margin-right: 7px;
-  margin-top: -3px;
-  vertical-align: middle;
-  border-radius: 1px;
-}
-#courier-chart, #merchant-chart {
-  max-height: 280px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
+
 
 .line{
 	border-top: 1px solid #CCC;
@@ -387,6 +337,7 @@ label.error{
 	display: inline;
 }
 
-.deliver, .problem{
+.deliver, .problem, .kecamatan-new-user{
 	display: none;
 }
+

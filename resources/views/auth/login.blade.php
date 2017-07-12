@@ -31,7 +31,7 @@
                     </div>
                 </div>
             @endif
-            <form method="post" action="{{ url('user/signin')}}" class="form-vertical box" id="fr">
+        <form method="post" action="{{ url('user/signin')}}" class="form-vertical box" id="fr">
             {{ csrf_field() }}                
                 <div class="row box-login">
                     <div class="sub-box-login">
@@ -41,17 +41,7 @@
                                 <img src="{{URL::asset('img/popbox-logo1.png')}}" class="logo-login">
                             </div>
                         </div>
-                        <div class="row label-sign-in">
-                            <div class="col-md-3 link-sign-in">
-                                <a href="/signin">Sign in</a>
-                            </div>
-                            <div class="col-md-5 link-forgot-in">
-                                Forgot Password
-                            </div>             
-                            <div class="col-md-4">
-                            </div>               
-                        </div>
-                        <div class="row">                              
+                       <div class="row">                              
                             <div class="col-md-12 alileft label-email">
                                 Email Address<br/>
                                 <input type="text" name="email" class="form-control" id="inputEmail3" placeholder="Email Address">

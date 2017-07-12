@@ -23,7 +23,7 @@ class UserController extends Controller {
 	// batas atas
 
 	public function getAdd(Request $req){
-		$role = DB::table("tb_role")->get();		
+		$role = DB::table("tb_role")->get();				
 		$this->data["role"] = $role;
 		return view('user.new', $this->data);  
 	}
@@ -47,20 +47,17 @@ class UserController extends Controller {
 	// }
 	// batas bawah
 
-	public function getRegister() {
-        
-		if(CNF_REGIST =='false') :    
+	public function getRegister() {        
 			if(\Auth::check()):
 				 return Redirect::to('')->with('message',\SiteHelpers::alert('success','Youre already login'));
 			else:
 				 return Redirect::to('user/login');
-			  endif;			  
-		else :				
-				return view('user.register');  
+			  	
 		 endif ; 
 	}
 
 	public function postCreate( Request $request) {	
+
 		$rules = array(
 			'firstname'=>'required|alpha_num|min:2',
 			'lastname'=>'required|alpha_num|min:2',
@@ -69,20 +66,27 @@ class UserController extends Controller {
 			'password'=>'required|between:6,12|confirmed',
 			'password_confirmation'=>'required|between:6,12'
 			);	
+		if ($request->input("role")=="3"){
+			$rules["kecamatan"] = "required";
+		}
 				
 		$validator = Validator::make($request->all(), $rules);
-
+		
 		if ($validator->passes()) {
-			$code = rand(10000,10000000);
-			
+			$code = rand(10000,10000000);			
 			$authen = new User;
 			$authen->first_name = $request->input('firstname');
 			$authen->last_name = $request->input('lastname');
 			$authen->role_id = $request->input('role');
+			if ($authen->role_id == 3){
+				$authen->kecamatan_id = $request->input('city_id');
+			}
 			$authen->email = trim($request->input('email'));			
 			$authen->password = \Hash::make($request->input('password'));
 			$authen->save();
 			return Redirect::to('user/list')->with('message',\SiteHelpers::alert('success',"Successfull created"));
+		}else{
+			return Redirect::to('user/add')->with('message',\SiteHelpers::alert('success',"Successfull created"));
 		}
 	}
 	

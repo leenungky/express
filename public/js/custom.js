@@ -230,6 +230,12 @@ $( document ).ready(function() {
        	autocomplete(url, idelement);
     });
 
+    $("input[name=kecamatan]").keyup(function( event ) {	    		        
+    	var  url =  "/transaction/getkecamatan";
+    	var idelement = "#city";
+       	autocomplete(url, idelement);
+    });
+
     $("input[name='receive']").bind("keydown", function(event) {
         if (event.keyCode==13){
             return false;
