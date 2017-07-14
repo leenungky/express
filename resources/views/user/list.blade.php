@@ -17,29 +17,24 @@
     <div class="container container-fluid">            	
 		@include('header')		
 		<br/>
+		@if (count($errors))     
+			<div class="row">				
+				<div class="col-md-12 alert alert-danger">		
+				    <ul>
+				        @foreach($errors->all() as $error) 		            				            
+				            <li>{{str_replace("name","Nama toko",$error)}}</li>
+				        @endforeach 
+				    </ul>
+			    </div>
+		    </div>
+		@endif 
 		<div class="row">	
-			<form action="/customer" method="get">
-				<div class="col-md-1">
-					Nama<br/>
-					<input type="text" name="name" class="form-control" value="{{isset($filter["name"]) ? $filter["name"] : ""}}">
-				</div>
-				<div class="col-md-1">
-					Owner<br/>
-					<input type="text" name="owner" class="form-control" value="{{isset($filter["owner"]) ? $filter["owner"] : ""}}">
-				</div>
-				<div class="col-md-1">
+			<form action="/user/list" method="get">				
+				<div class="col-md-4">
 					Email<br/>
 					<input type="text" name="email" class="form-control" value="{{isset($filter["email"]) ? $filter["email"] : ""}}">
-				</div>
-				<div class="col-md-1">
-					Phone<br/>
-					<input type="text" name="phone" class="form-control" value="{{isset($filter["phone"]) ? $filter["phone"] : ""}}">
-				</div>
-				<div class="col-md-2">
-					Alamat<br/>
-					<input type="text" name="address" class="form-control" value="{{isset($filter["address"]) ? $filter["address"] : ""}}">
-				</div>
-				<div class="col-md-2">
+				</div>				
+				<div class="col-md-8">
 					<br/>
 					<input type="submit" value="find" class="btn">
 				</div>
@@ -67,12 +62,9 @@
 						}
 					?>
 					<thead>
-						<th><a href="/user/list?sort=username">Firstname</a>			    			
-			    		</th>
-			    		<th><a href="/user/list?sort=username">Lastname</a>			    			
-			    		</th>
-			    		<th><a href="/user/list?sort=email">email</a>			    			
-			    		</th>			    																				
+						<th>Firstname</th>
+			    		<th>Lastname</th>
+			    		<th>email</th>			    																			
 						<th>Action</th>
 					</thead>
 					<tbody>

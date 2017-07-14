@@ -10,6 +10,7 @@ use Validator, Redirect;
 use Illuminate\Support\Facades\Input;
 use App\Lib\SiteHelpers;
 use \DB;
+use \URL;
 
 class UserController extends Controller {
 
@@ -27,18 +28,63 @@ class UserController extends Controller {
 		$this->data["role"] = $role;
 		return view('user.new', $this->data);  
 	}
-	public function getList(Request $req){		
-		$this->data["users"] = User::get();					
+	public function getList(Request $req){
+		$input= $req->input();         		
+		$dbuser = $this->_get_index_filter($input);     
+		$this->data["input"] = $input;
+		$this->data["users"] = $dbuser->get();
 		return view('user.list', $this->data);  
 	}
 
 	public function getEdit(Request $req, $id){		
-		$user = DB::table("tb_users")->where("id" , $id)->first();
+		$user = DB::table("tb_users")->where("id" , $id)->first();	
+		$this->data["kecamatan"] = "";
+		if ($user->kecamatan_id>0){
+			$kecamatan = DB::table("tb_rapid_tarif")->where("id" , $user->kecamatan_id)->first();
+			$this->data["kecamatan"] = $kecamatan->city.", ".$kecamatan->kecamatan;
+		}
 		$role = DB::table("tb_role")->get();		
 		$this->data["role"] = $role;
 		$this->data["user"] = $user;
 		$this->data["req"] = $req;
 		return view('user.edit', $this->data);  
+	}
+
+	public function getDelete(Request $req, $id){		
+		$user = DB::table("tb_users")->where("id" , $id)->delete();
+		return redirect('/user/list')->with('message', "Successfull delete");
+	}
+
+	public function postUpdate(Request $req, $id){	
+		$rules = array(
+			'firstname'=>'required|alpha_num|min:2',
+			'lastname'=>'required|alpha_num|min:2',			
+			'role' => 'required'			
+			);	
+		if ($req->input("role")=="3"){
+			$rules["kecamatan"] = "required";
+		}
+		
+		if (!empty($req->input("password"))){
+			$rules["password"] = 'required|between:6,12|confirmed';	
+			$rules['password_confirmation'] ='required|between:6,12';
+		}
+
+		$validator = Validator::make($req->all(), $rules);
+
+        if ($validator->fails()) {            
+            return Redirect::to(URL::previous())->withInput(Input::all())->withErrors($validator);            
+        }
+
+        $input = $req->input();        			
+		$arrUpdate = array("first_name" => $input["firstname"],
+			"last_name" => $input["lastname"],
+			"kecamatan_id" => $input["city_id"]);        
+		if (!empty($input["password"])){
+			$arrUpdate["password"] = \Hash::make($input["password"]);
+		}		
+        DB::table("tb_users")->where("id", $id)->update($arrUpdate);        
+		return redirect('/user/list')->with('message', "Successfull delete");
 	}
 
 	// public function postCreated(Request $req){
@@ -51,8 +97,7 @@ class UserController extends Controller {
 			if(\Auth::check()):
 				 return Redirect::to('')->with('message',\SiteHelpers::alert('success','Youre already login'));
 			else:
-				 return Redirect::to('user/login');
-			  	
+				 return Redirect::to('user/login');			  	
 		 endif ; 
 	}
 
@@ -69,25 +114,25 @@ class UserController extends Controller {
 		if ($request->input("role")=="3"){
 			$rules["kecamatan"] = "required";
 		}
-				
+
 		$validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {            
+            return Redirect::to(URL::previous())->withInput(Input::all())->withErrors($validator);            
+        }
 		
-		if ($validator->passes()) {
-			$code = rand(10000,10000000);			
-			$authen = new User;
-			$authen->first_name = $request->input('firstname');
-			$authen->last_name = $request->input('lastname');
-			$authen->role_id = $request->input('role');
-			if ($authen->role_id == 3){
-				$authen->kecamatan_id = $request->input('city_id');
-			}
-			$authen->email = trim($request->input('email'));			
-			$authen->password = \Hash::make($request->input('password'));
-			$authen->save();
-			return Redirect::to('user/list')->with('message',\SiteHelpers::alert('success',"Successfull created"));
-		}else{
-			return Redirect::to('user/add')->with('message',\SiteHelpers::alert('success',"Successfull created"));
+		$authen = new User;
+		$authen->first_name = $request->input('firstname');
+		$authen->last_name = $request->input('lastname');
+		$authen->role_id = $request->input('role');
+		if ($authen->role_id == 3){
+			$authen->kecamatan_id = $request->input('city_id');
 		}
+		$authen->email = trim($request->input('email'));			
+		$authen->password = \Hash::make($request->input('password'));
+		$authen->save();
+		return Redirect::to('user/list')->with('message',\SiteHelpers::alert('success',"Successfull created"));
+		
 	}
 	
 	public function getActivation( Request $request  )
@@ -453,5 +498,14 @@ class UserController extends Controller {
 		}
 
 	}
+
+	//================= batas
+	private function _get_index_filter($filter){
+        $dbuser = DB::table("tb_users");
+        if (isset($filter["email"])){
+            $dbuser = $dbuser->where("email", "like", "%".$filter["email"]."%");
+        }        
+        return $dbuser;
+    }
 	
 }

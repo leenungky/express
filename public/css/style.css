@@ -38,6 +38,7 @@
 
 .logo-login{
 	width: 61%;
+	margin: 3%;
 }
 
 .logo{
@@ -101,6 +102,9 @@
 	float: left;
 }
 
+.col-top-logo{
+	padding: 0 0;
+}
 .col-top-menu{
 	padding:3% 0;
 	text-align: center;		

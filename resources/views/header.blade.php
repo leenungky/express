@@ -13,12 +13,27 @@
 <div class="row">
     		<div class="col-md-8">
     			<div class="row row-top-menu">
-    				<div class="col-md-2 col-top-menu1">	
-    					<img src="{{URL::asset('img/popbox-logo1.png')}}" class="logo">
-    				</div>
-    				<a href="/customer"><div class="col-md-2 col-top-menu {{($type=="customer") ? 'active' : ''}}">Customer</div></a>
-                    <a href="/transaction"><div class="col-md-2 col-top-menu {{($type=="transaction") ? 'active' : ''}}">Transaction</div></a>
-                    <a href="/transaction/taken"><div class="col-md-2 col-top-menu {{($type=="Customer_taken") ? 'active' : ''}}">Customer Taken</div></a>
+    				<div class="col-md-2 col-top-logo">	
+    					<img src="{{URL::asset('img/logo-bks.png')}}" class="logo">
+    				</div>    				
+                    <div class="col-md-2 col-top-menu1">
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    Transaction
+                                    <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <li>
+                                     <a href="/transaction">List Transaction</a>
+                                </li>  
+                                <li role="separator" class="divider"></li>
+                                <li>
+                                    <a href="/collect">Gabungan</a>
+                                </li>                                                          
+                            </ul>
+                        </div>                      
+                    </div>
+                    
                     <!-- <a href="/report/biaya"><div class="col-md-2 col-top-menu {{($type=="Laporan_Pelanggan") ? 'active' : ''}}">Laporan Pelanggan</div></a>
                     <a href="/report/pengiriman"><div class="col-md-2 col-top-menu {{($type=="Laporan_Pengiriman") ? 'active' : ''}}">Laporan Pengiriman</div></a> -->    
                     <div class="col-md-2 col-top-menu1">
@@ -34,8 +49,46 @@
                                 <li role="separator" class="divider"></li>
                                 <li>
                                     <a href="/report/pengiriman">Laporan Pengiriman</a>
-                                </li>                          
-                                
+                                </li>                                                          
+                            </ul>
+                        </div>                      
+                    </div>
+                    <div class="col-md-2 col-top-menu1">
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    Master Data
+                                    <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+
+                                <li>
+                                    <a href="/customer">Customer</a>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li>
+                                     <a href="/user/list">User</a>
+                                </li>  
+                                <li role="separator" class="divider"></li>
+                                <li>
+                                     <a href="/cities/list">City</a>
+                                </li>  
+                                <li role="separator" class="divider"></li>
+                                <li>
+                                    <a href="/agent/list">Perwakilan / zona</a>
+                                </li>
+                                <li role="separator" class="divider"></li>
+
+                                <li>
+                                    <a href="#">Karyawan</a>
+                                </li>                                    
+                                <li role="separator" class="divider"></li>
+                                <li>
+                                    <a href="#">Harga</a>
+                                </li>     
+                                <li role="separator" class="divider"></li>
+                                <li>
+                                    <a href="#">3pl</a>
+                                </li>                                                          
                             </ul>
                         </div>                      
                     </div>                  
@@ -50,10 +103,10 @@
 						    <span class="caret"></span>
 					</button>
 					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-					    <li><a href="/user/list">User</a></li>	
+ 					    <!-- <li><a href="/user/list">User</a></li>	
                         <li role="separator" class="divider"></li>
                         <li><a href="/role/list">Role</a></li>  					    
-					    <li role="separator" class="divider"></li>
+					    <li role="separator" class="divider"></li> -->
 				        <li><a href="/user/logout">logout</a></li>
 		  		    </ul>
 				</div>    					

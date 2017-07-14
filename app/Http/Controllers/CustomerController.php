@@ -23,9 +23,7 @@ class CustomerController extends Controller {
         $input= $req->input();         
         $custDB = $this->_get_index_filter($input);        
         $custDB = $this->_get_index_sort($req, $custDB, $input);           
-        $custDB = $custDB->get();
-        $query = DB::getQueryLog();
-        $lastQuery = end($query);        
+        $custDB = $custDB->get();           
         $this->data["input"] = $input;
         $this->data["cust"] = $custDB;
         return view('customer.index', $this->data);

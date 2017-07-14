@@ -25,6 +25,8 @@ Route::get('/', [
 Route::group(['middleware' => 'logic'], function(){
 	Route::controller('/user', 'UserController');
 	Route::controller('/role', 'RoleController');
+	Route::controller('/cities', 'CityController');
+	Route::controller('/agent', 'AgentController');
 });
 
 Route::group(['prefix' => 'auth'], function(){
@@ -68,4 +70,11 @@ Route::group(['prefix' => 'report','middleware' => 'logic'], function(){
 	Route::any('/pengiriman_excel', ['as' => 'laporan_pengiriman', 'uses' => 'ReportController@pengiriman_excel']);	
 });
 
-Route::get('/home', 'HomeController@index');
+Route::group(['prefix' => 'report','middleware' => 'logic'], function(){
+	Route::any('/biaya_excel', ['as' => 'laporan_biaya_excel', 'uses' => 'ReportController@biaya_excel']);	
+});
+
+Route::group(['prefix' => 'collect', 'middleware' => 'logic'], function(){
+	Route::any('/', ['as' => 'collect_index', 'uses' => 'CollectController@index']);		
+});
+

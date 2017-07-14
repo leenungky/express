@@ -22,7 +22,7 @@
 				<div class="col-md-12 alert alert-danger">		
 				    <ul>
 				        @foreach($errors->all() as $error) 		            				            
-				            <li>{{str_replace("name","Nama toko",$error)}}</li>
+				            <li>{{$error}}</li>
 				        @endforeach 
 				    </ul>
 			    </div>
@@ -36,7 +36,7 @@
 					<input type="hidden" name="city_id"/>					
 					<div class="form-group">
 					    <label for="email">Firstname</label>
-						 <input type="text" class="form-control" id="firstname" name="firstname" placeholder="input username" value="{{ old('username') }}" required>
+						 <input type="text" class="form-control" id="firstname" name="firstname" placeholder="input username" value="{{ old('firstname') }}" required>
 					</div>					
 					<div class="form-group">
 					    <label for="email">Lastname</label>
@@ -49,7 +49,7 @@
 					<div class="form-group role-user">
 					    <label for="email">Role User</label>
 						<select name="role" class="form-control" required>
-							<option value="">Pilih Role</option>
+							<option>Pilih Role</option>
 							@foreach ($role as $key => $value)
 								<option value="{{$value->id}}">{{$value->name}}</option>
 							@endforeach
@@ -57,15 +57,15 @@
 					</div>
 					<div class="form-group kecamatan-new-user">
 					    <label for="email">Kecamatan</label>
-						<input type="text" class="form-control" id="city" name="kecamatan" placeholder="input kecamatan" value="{{ old('kecamatan') }}" required>
+						<input type="text" class="form-control" id="city" name="kecamatan" placeholder="input kecamatan" value="{{ old('kecamatan') }}">
 					</div>	
 					<div class="form-group">
 					    <label for="pwd">Password:</label>
-					    <input type="text" class="form-control" name="password" placeholder="input password" value="{{ old('password') }}" required>
+					    <input type="password" class="form-control" name="password" placeholder="input password" value="{{ old('password') }}" required>
 					</div>
 					<div class="form-group">
 					    <label for="pwd">Password Confirmation:</label>
-					    <input type="text" class="form-control" name="password_confirmation" placeholder="input password" value="{{ old('password_confirmation') }}" required>
+					    <input type="password" class="form-control" name="password_confirmation" placeholder="input password" value="{{ old('password_confirmation') }}" required>
 					</div>
 					<button type="submit" class="btn">Submit</button>
 				</form>
@@ -84,10 +84,12 @@
 			var role = $("select[name='role'] option:selected").text();
 			if (role=="staff"){
 				$(".kecamatan-new-user").show();
+				$("#city" ).attr( "required", "true" );
 			}else{
 				$(".kecamatan-new-user").hide();
 				$("input[name='city_id']").val("");
 				$("input[name='kecamatan']").val("");
+				$("#city" ).attr( "required", "false" );
 			}
 		})
 	});

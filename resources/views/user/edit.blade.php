@@ -22,7 +22,7 @@
 				<div class="col-md-12 alert alert-danger">		
 				    <ul>
 				        @foreach($errors->all() as $error) 		            				            
-				            <li>{{str_replace("name","Nama toko",$error)}}</li>
+				            <li>{{$error}}</li>
 				        @endforeach 
 				    </ul>
 			    </div>
@@ -31,8 +31,9 @@
 		<br/>
 		<div class="row">				
 			<div class="col-md-12">		
-				<form method="post" action="/user/create" class="formsubmit">
+				<form method="post" action="/user/update/{{$user->id}}" class="formsubmit">
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">					
+					<input type="hidden" name="city_id" value="{{$user->kecamatan_id}}"/>		
 					<div class="form-group">
 					    <label for="email">Firstname</label>
 						 <input type="text" class="form-control" id="firstname" name="firstname" placeholder="input username" value="{{$user->first_name}}" required>
@@ -56,32 +57,23 @@
 								@endif								
 							@endforeach
 						</select>
-					</div>					
+					</div>		
+					<div class="form-group kecamatan-new-user">
+					    <label for="email">Kecamatan</label>
+						<input type="text" class="form-control" id="city" name="kecamatan" placeholder="input kecamatan" value="{{$kecamatan}}">
+					</div>			
 					<div class="form-group">
 					    <label for="pwd">Password:</label>
-					    <input type="text" class="form-control" name="password" placeholder="input password" value="{{ old('password') }}" required>
+					    <input type="password" class="form-control" name="password" placeholder="input password" value="{{ old('password') }}">
 					</div>
 					<div class="form-group">
 					    <label for="pwd">Password Confirmation:</label>
-					    <input type="text" class="form-control" name="password_confirmation" placeholder="input password" value="{{ old('password_confirmation') }}" required>
+					    <input type="password" class="form-control" name="password_confirmation" placeholder="input password" value="{{ old('password_confirmation') }}">
 					</div>
 					<button type="submit" class="btn">Submit</button>
 				</form>
 			</div>
-			<div class="col-md-4">			
-				<div class="row">
-					<div class="col-md-12">
-            			<table class="table">
-            				<thead>
-            					<th>
-            						<input type="checkbox" name="all_role" class="form-control" style="height: 20px" />
-            					</th>
-            					<th>Role Name</th><th>Description</th>
-            				</thead>
-            			</table>
-					</div>
-				</div>
-			</div>
+			
 		</div>
 	</div>	    	
 
@@ -92,5 +84,22 @@
 <script type="text/javascript">
 	$(document).ready(function(){	
 		$( "input[name=name]" ).focus();
+		var role = $("select[name='role'] option:selected").text();
+		if (role=="staff"){
+			$(".kecamatan-new-user").show();
+			$("#city" ).attr( "required", "true" );
+		}
+		$("select[name='role']").change(function(){
+			var role = $("select[name='role'] option:selected").text();
+			if (role=="staff"){
+				$(".kecamatan-new-user").show();
+				$("#city" ).attr( "required", "true" );
+			}else{
+				$(".kecamatan-new-user").hide();
+				$("input[name='city_id']").val("0");
+				$("input[name='kecamatan']").val("");
+				$("#city" ).attr( "required", "false" );
+			}
+		})
 	});
 </script>
