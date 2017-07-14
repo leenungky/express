@@ -17,11 +17,11 @@ class AgentController extends Controller {
     var $data;
     public function __construct(Request $req){
     	$this->data["type"]= "master_perwakilan";    	
-    	$this->data["request"]= $req;    	
+    	$this->data["req"]= $req;    	
     }
 
 	public function getList(){  
-		$req = $this->data["request"];      
+		$req = $this->data["req"];      
         $input= $req->input();     
         $dbagent = $this->_get_index_filter($input);
         $this->data["agent"] = $dbagent->get();
@@ -43,7 +43,7 @@ class AgentController extends Controller {
 	}
 
 	public function postCreate(){	
-		$req = $this->data["request"];
+		$req = $this->data["req"];
 	 	$validator = Validator::make($req->all(), [            
             'name' => 'required',
             'phone' => 'required|unique:agent',
@@ -72,7 +72,7 @@ class AgentController extends Controller {
 
     	
 	public function postUpdate($id){	
-        $req = $this->data["request"];
+        $req = $this->data["req"];
 		$validator = Validator::make($req->all(), [            
             'name' => 'required',
             'phone' => 'required',
