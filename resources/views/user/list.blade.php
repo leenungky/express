@@ -64,7 +64,9 @@
 					<thead>
 						<th>Firstname</th>
 			    		<th>Lastname</th>
-			    		<th>email</th>			    																			
+			    		<th>email</th>	
+			    		<th>role</th>
+			    		<th>agent</th>			    																			
 						<th>Action</th>
 					</thead>
 					<tbody>
@@ -73,6 +75,12 @@
 								<td>{{$value->first_name}}</td>
 								<td>{{$value->last_name}}</td>
 								<td>{{$value->email}}</td>
+								<td>{{$value->role}}</td>
+								<td>
+									@if (isset($value->agent_name))
+										{{$value->agent_name}}, {{$value->city_name}}
+									@endif
+								</td>
 								<td>
 									<a href="/user/edit/{{$value->id}}">
 										<span class="edit"> 

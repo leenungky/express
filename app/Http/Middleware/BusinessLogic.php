@@ -30,11 +30,28 @@ class BusinessLogic
     public function getRedirect($controller, $action, $role){
         $strRedirect = "";        
         if ($role=="staff"){
-            if ($controller == "UserController" && $action=="getList"){
-                $strRedirect = "/transaction";
-            }else if ($controller == "CustomerController" || $controller == "ReportController"){
+            if ($controller == "UserController"){
+                if ($action == "getLogout" || $action=="getLogin" || $action=="postLogin"){                    
+                }else{
+                    $strRedirect = "/transaction";    
+                }
+                
+            }else if ($controller == "CustomerController" 
+                || $controller == "ReportController" 
+                || $controller == "CityController"
+                || $controller == "RoleController"
+                || $controller == "CollectController" ){
                 $strRedirect = "/transaction";
             }
+        }
+        if ($role=="admin"){
+             if ($controller == "UserController"){
+                if ($action == "getLogout" || $action=="getLogin" || $action=="postLogin"){  
+                }else{
+                    $strRedirect = "/customer";    
+                }
+            }
+                
         }
         return $strRedirect;
 

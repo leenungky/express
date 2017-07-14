@@ -39,18 +39,20 @@
 					</div>				
 					<div class="form-group">
 					    <label for="email">Nama</label>
-						 <input type="text" class="form-control" name="name" value="{{$city->name}}" placeholder="input pemilik" required>
+						 <input type="text" class="form-control" id="city_name" name="name" value="{{$city->name}}" placeholder="input pemilik" required>
 					</div>					
 					<button type="submit" class="btn">Submit</button>
 				</form>
 			</div>
+		
+		
 		</div>
 	 </div>	    	
 </div>
 </body>
 </html>
 <script type="text/javascript">
-	// $(document.ready(function(){
+	$(document).ready(function(){
 		
-	// }))
+	});
 </script>

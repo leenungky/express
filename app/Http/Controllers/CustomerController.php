@@ -16,21 +16,25 @@ class CustomerController extends Controller {
     
     var $data;
     public function __construct(Request $req){
-    	$this->data["type"]= "customer";    	
+    	$this->data["type"]= "master_customer";  
+        $this->data["req"] = $req;    	
     }
 
-	public function index(Request $req){        
+	public function index(){                
+        $req = $this->data["req"];
         $input= $req->input();         
         $custDB = $this->_get_index_filter($input);        
         $custDB = $this->_get_index_sort($req, $custDB, $input);           
         $custDB = $custDB->get();           
+        // echo $req->session()->get('role');
         $this->data["input"] = $input;
         $this->data["cust"] = $custDB;
         return view('customer.index', $this->data);
     }
 
-    public function create(Request $req){        
-         $validator = Validator::make($req->all(), [            
+    public function create(){
+        $req = $this->data["req"];
+        $validator = Validator::make($req->all(), [            
             'name' => 'required|unique:inventory_customer|max:100'          
         ]);
 
@@ -44,13 +48,14 @@ class CustomerController extends Controller {
         return redirect('/customer')->with('message', "Successfull create");
     }
 
-    public function edit(Request $req, $id){
+    public function edit($id){
         $customer = DB::table("inventory_customer")->where("id", $id)->first();        
         $this->data["customer"] = $customer;
         return view('customer.edit', $this->data);        
     }
 
-    public function delete(Request $req, $id){
+    public function delete($id){
+        $req = $this->data["req"];
         DB::table("inventory_customer")->where("id", $id)->delete();        
         DB::table("inventory_transaction")->where("sender_id", $id)->delete();        
         DB::table("inventory_customer_total_parcel")->where("customer_id", $id)->delete();        
@@ -61,7 +66,8 @@ class CustomerController extends Controller {
         return view('customer.new', $this->data);
     }
 
-    public function update(Request $req, $id){
+    public function update($id){
+        $req = $this->data["req"];
         $arrInsert = $req->input();        
         unset($arrInsert["_token"]);        
         $customer = DB::table("inventory_customer")->where("id", $id)->update($arrInsert);

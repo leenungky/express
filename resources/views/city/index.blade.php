@@ -49,13 +49,19 @@
 								<td>
 									<a href="/cities/edit/{{$value->id}}">
 										<span class="edit"> 
-					    					<span class="glyphicon glyphicon-pencil"></span>
+					    					<span class="glyphicon glyphicon-pencil"  rel="tooltip" title="delete"></span>
 					    				</span>
 				    				</a> | 
 				    				<a href="/cities/delete/{{$value->id}}" class="confirmation">
 					    				<span class="delete">
-				    						<span class="glyphicon glyphicon-remove"></span>
-				    				</sp
+				    						<span class="glyphicon glyphicon-remove"  rel="tooltip" title="delete"></span>
+				    					</span>
+				    				</a> |
+				    				<a href="/cities/setcitykecamatan/{{$value->id}}">
+					    				<span class="delete">
+				    						<span class="glyphicon glyphicon-random"  rel="tooltip" title="Set Kecamatan City"></span>
+				    					</span>
+				    				</a>
 								</td>
 							</tr>
 						@endforeach						

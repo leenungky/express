@@ -24,74 +24,85 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                                 <li>
-                                     <a href="/transaction">List Transaction</a>
-                                </li>  
+                                     <a href="/transaction">Create Transaction</a>
+                                </li>                                                                  
+                                @if ($req->session()->get("role")!="staff")
+                                    <li role="separator" class="divider"></li>
+                                    <li>
+                                        <a href="/collect/list">Gabungan</a>
+                                    </li>  
+                                @endif
                                 <li role="separator" class="divider"></li>
                                 <li>
-                                    <a href="/collect">Gabungan</a>
-                                </li>                                                          
+                                    <a href="/transaction/taken">Customer Taken</a>
+                                </li>                                                                
                             </ul>
                         </div>                      
                     </div>
                     
-                    <!-- <a href="/report/biaya"><div class="col-md-2 col-top-menu {{($type=="Laporan_Pelanggan") ? 'active' : ''}}">Laporan Pelanggan</div></a>
-                    <a href="/report/pengiriman"><div class="col-md-2 col-top-menu {{($type=="Laporan_Pengiriman") ? 'active' : ''}}">Laporan Pengiriman</div></a> -->    
-                    <div class="col-md-2 col-top-menu1">
-                        <div class="dropdown">
-                            <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    Laporan
-                                    <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                <li>
-                                     <a href="/report/biaya">Laporan Pelanggan</a>
-                                </li>  
-                                <li role="separator" class="divider"></li>
-                                <li>
-                                    <a href="/report/pengiriman">Laporan Pengiriman</a>
-                                </li>                                                          
-                            </ul>
-                        </div>                      
-                    </div>
-                    <div class="col-md-2 col-top-menu1">
-                        <div class="dropdown">
-                            <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    Master Data
-                                    <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    @if ( ($req->session()->get("role")=="administrator") || ($req->session()->get("role")=="admin") )   
+                        <div class="col-md-2 col-top-menu1">
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                        Laporan
+                                        <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                    <li>
+                                         <a href="/report/biaya">Laporan Pelanggan</a>
+                                    </li>  
+                                    <li role="separator" class="divider"></li>
+                                    <li>
+                                        <a href="/report/pengiriman">Laporan Pengiriman</a>
+                                    </li>                                                          
+                                </ul>
+                            </div>                      
+                        </div>
+                    @endif
 
-                                <li>
-                                    <a href="/customer">Customer</a>
-                                </li>
-                                <li role="separator" class="divider"></li>
-                                <li>
-                                     <a href="/user/list">User</a>
-                                </li>  
-                                <li role="separator" class="divider"></li>
-                                <li>
-                                     <a href="/cities/list">City</a>
-                                </li>  
-                                <li role="separator" class="divider"></li>
-                                <li>
-                                    <a href="/agent/list">Perwakilan / zona</a>
-                                </li>
-                                <li role="separator" class="divider"></li>
+                    @if ( ($req->session()->get("role")=="administrator") || ($req->session()->get("role")=="admin") ) 
+                        <div class="col-md-2 col-top-menu1">
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                        Master Data
+                                        <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 
-                                <li>
-                                    <a href="#">Karyawan</a>
-                                </li>                                    
-                                <li role="separator" class="divider"></li>
-                                <li>
-                                    <a href="#">Harga</a>
-                                </li>     
-                                <li role="separator" class="divider"></li>
-                                <li>
-                                    <a href="#">3pl</a>
-                                </li>                                                          
-                            </ul>
-                        </div>                      
-                    </div>                  
+                                    <li>
+                                        <a href="/customer">Customer</a>
+                                    </li>
+                                    @if ($req->session()->get("role")=="administrator")
+                                        <li role="separator" class="divider"></li>
+                                        <li>
+                                             <a href="/user/list">User</a>
+                                        </li>  
+                                    @endif
+                                    <li role="separator" class="divider"></li>
+                                    <li>
+                                         <a href="/cities/list">City</a>
+                                    </li>  
+                                    <li role="separator" class="divider"></li>
+                                    <li>
+                                        <a href="/agent/list">Perwakilan / zona</a>
+                                    </li>
+                                    <li role="separator" class="divider"></li>
+
+                                    <li>
+                                        <a href="#">Karyawan</a>
+                                    </li>                                    
+                                    <li role="separator" class="divider"></li>
+                                    <li>
+                                        <a href="#">Harga</a>
+                                    </li>     
+                                    <li role="separator" class="divider"></li>
+                                    <li>
+                                        <a href="#">3pl</a>
+                                    </li>                                                          
+                                </ul>
+                            </div>                      
+                        </div>   
+                    @endif               
     			</div>
     		</div>
     	<div class="col-md-4">

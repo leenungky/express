@@ -17,18 +17,24 @@ class UserController extends Controller {
 	
 	protected $layout = "layouts.main";
 
-	public function __construct() {
-		$this->data["type"]= "User";      
+	public function __construct(Request $req) {
+		$this->data["type"]= "User"; 
+		$this->data["req"]= $req; 
 	} 
 
-	// batas atas
-
-	public function getAdd(Request $req){
-		$role = DB::table("tb_role")->get();				
+	public function getAdd(){
+		$req = $this->data["req"];
+		$role = DB::table("tb_role")->get();
+		$agent = DB::table("agent")
+		->select("agent.id","agent.name", "tb_cities.name as kota")
+		->join("tb_cities","tb_cities.id","=", "agent.city_id", "left")
+		->get();
+		$this->data["agent"] = $agent;				
 		$this->data["role"] = $role;
 		return view('user.new', $this->data);  
 	}
-	public function getList(Request $req){
+	public function getList(){
+		$req = $this->data["req"];
 		$input= $req->input();         		
 		$dbuser = $this->_get_index_filter($input);     
 		$this->data["input"] = $input;
@@ -36,33 +42,33 @@ class UserController extends Controller {
 		return view('user.list', $this->data);  
 	}
 
-	public function getEdit(Request $req, $id){		
+	public function getEdit($id){		
+		$req = $this->data["req"];
 		$user = DB::table("tb_users")->where("id" , $id)->first();	
-		$this->data["kecamatan"] = "";
-		if ($user->kecamatan_id>0){
-			$kecamatan = DB::table("tb_rapid_tarif")->where("id" , $user->kecamatan_id)->first();
-			$this->data["kecamatan"] = $kecamatan->city.", ".$kecamatan->kecamatan;
-		}
+		$agent = DB::table("agent")->get();					
 		$role = DB::table("tb_role")->get();		
+		$this->data["agent"] = $agent;
 		$this->data["role"] = $role;
 		$this->data["user"] = $user;
 		$this->data["req"] = $req;
 		return view('user.edit', $this->data);  
 	}
 
-	public function getDelete(Request $req, $id){		
+	public function getDelete($id){		
+		$req = $this->data["req"];
 		$user = DB::table("tb_users")->where("id" , $id)->delete();
 		return redirect('/user/list')->with('message', "Successfull delete");
 	}
 
-	public function postUpdate(Request $req, $id){	
+	public function postUpdate($id){	
+		$req = $this->data["req"];
 		$rules = array(
 			'firstname'=>'required|alpha_num|min:2',
 			'lastname'=>'required|alpha_num|min:2',			
 			'role' => 'required'			
 			);	
 		if ($req->input("role")=="3"){
-			$rules["kecamatan"] = "required";
+			$rules["agent"] = "required";
 		}
 		
 		if (!empty($req->input("password"))){
@@ -79,7 +85,7 @@ class UserController extends Controller {
         $input = $req->input();        			
 		$arrUpdate = array("first_name" => $input["firstname"],
 			"last_name" => $input["lastname"],
-			"kecamatan_id" => $input["city_id"]);        
+			"agent_id" => $input["agent"]);        
 		if (!empty($input["password"])){
 			$arrUpdate["password"] = \Hash::make($input["password"]);
 		}		
@@ -112,7 +118,7 @@ class UserController extends Controller {
 			'password_confirmation'=>'required|between:6,12'
 			);	
 		if ($request->input("role")=="3"){
-			$rules["kecamatan"] = "required";
+			$rules["agent"] = "required";
 		}
 
 		$validator = Validator::make($request->all(), $rules);
@@ -120,13 +126,15 @@ class UserController extends Controller {
         if ($validator->fails()) {            
             return Redirect::to(URL::previous())->withInput(Input::all())->withErrors($validator);            
         }
-		
+  //       echo "<pre>";
+		// print_r($request->input());
+		// die();
 		$authen = new User;
 		$authen->first_name = $request->input('firstname');
 		$authen->last_name = $request->input('lastname');
 		$authen->role_id = $request->input('role');
 		if ($authen->role_id == 3){
-			$authen->kecamatan_id = $request->input('city_id');
+			$authen->agent_id = $request->input('agent');
 		}
 		$authen->email = trim($request->input('email'));			
 		$authen->password = \Hash::make($request->input('password'));
@@ -135,8 +143,9 @@ class UserController extends Controller {
 		
 	}
 	
-	public function getActivation( Request $request  )
+	public function getActivation()
 	{
+		$req = $this->data["req"];
 		$num = $request->input('code');
 		if($num =='')
 			return Redirect::to('user/login')->with('message',\SiteHelpers::alert('error','Invalid Code Activation!'));
@@ -164,8 +173,8 @@ class UserController extends Controller {
 		}	
 	}
 
-	public function postSignin( Request $request) {
-		
+	public function postSignin() {
+		$request = $this->data["req"];
 		$rules = array(
 			'email'=>'required|email',
 			'password'=>'required',
@@ -501,7 +510,11 @@ class UserController extends Controller {
 
 	//================= batas
 	private function _get_index_filter($filter){
-        $dbuser = DB::table("tb_users");
+        $dbuser = DB::table("tb_users")
+        ->select("tb_users.id", "tb_users.first_name", "tb_users.last_name", "tb_users.email", "tb_role.name as role", "agent.name as agent_name", "tb_cities.name as city_name")
+        ->join("tb_role", "tb_role.id", "=", "tb_users.role_id", "left")
+        ->join("agent", "agent.id", "=", "tb_users.agent_id", "left")
+        ->join("tb_cities", "tb_cities.id", "=", "agent.city_id", "left");
         if (isset($filter["email"])){
             $dbuser = $dbuser->where("email", "like", "%".$filter["email"]."%");
         }        

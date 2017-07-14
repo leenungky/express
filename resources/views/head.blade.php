@@ -27,13 +27,10 @@
 	<script type="text/javascript" src="{{ URL::asset('js/jquery.min.js') }}"></script>
 	<script type="text/javascript" src="{{ URL::asset('js/bootstrap.min.js') }}"></script>	
 	
-	<script type="text/javascript" src="{{ URL::asset('js/jquerysession.js') }}"></script>
-	<script type="text/javascript" src="{{ URL::asset('js/jquery.elevateZoom-3.0.8.min.js') }}"></script>		
 	<script type="text/javascript" src="{{ URL::asset('js/LazyLoad.min.js') }}"></script>	
 
 	<!-- <script type="text/javascript" src="{{ URL::asset('js/jquery-ui-1.10.4.custom.min.js') }}"></script>	 -->	
 	<script type="text/javascript" src="{{ URL::asset('js/jquery-ui.min.js') }}"></script>
-	<script type="text/javascript" src="{{ URL::asset('js/paginathing.js') }}"></script>
 	<script type="text/javascript" src="{{ URL::asset('js/jquery-idleTimeout.js') }}"></script>
 	<script type="text/javascript" src="{{ URL::asset('js/numeric.min.js') }}"></script>
 	<script type="text/javascript" src="{{ URL::asset('js/bootstrap-tokenfield.js') }}"></script>
@@ -44,8 +41,7 @@
 
 	<!--<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>-->
-	<script type="text/javascript" src="{{ URL::asset('js/raphael-min.js') }}"></script>	
-	<script type="text/javascript" src="{{ URL::asset('js/morris.min.js') }}"></script>	
+	
 
 	 	
     <!-- <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>	 -->

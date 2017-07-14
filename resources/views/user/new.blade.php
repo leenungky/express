@@ -32,8 +32,7 @@
 		<div class="row">				
 			<div class="col-md-12">		
 				<form method="post" action="/user/create" class="formsubmit">
-					<input type="hidden" name="_token" value="{{ csrf_token() }}">	
-					<input type="hidden" name="city_id"/>					
+					<input type="hidden" name="_token" value="{{ csrf_token() }}">									
 					<div class="form-group">
 					    <label for="email">Firstname</label>
 						 <input type="text" class="form-control" id="firstname" name="firstname" placeholder="input username" value="{{ old('firstname') }}" required>
@@ -55,9 +54,14 @@
 							@endforeach
 						</select>
 					</div>
-					<div class="form-group kecamatan-new-user">
-					    <label for="email">Kecamatan</label>
-						<input type="text" class="form-control" id="city" name="kecamatan" placeholder="input kecamatan" value="{{ old('kecamatan') }}">
+					<div class="form-group agent-user">
+					    <label for="email">Agent</label>
+						<select name="agent" id="agent" class="form-control">
+							<option>Pilih Agent</option>
+							@foreach ($agent as $key => $value)
+								<option value="{{$value->id}}">{{$value->name}}, {{$value->kota}}</option>
+							@endforeach
+						</select>
 					</div>	
 					<div class="form-group">
 					    <label for="pwd">Password:</label>
@@ -83,13 +87,12 @@
 		$("select[name='role']").change(function(){
 			var role = $("select[name='role'] option:selected").text();
 			if (role=="staff"){
-				$(".kecamatan-new-user").show();
-				$("#city" ).attr( "required", "true" );
+				$(".agent-user").show();
+				$("#agent" ).attr( "required", "true" );
 			}else{
-				$(".kecamatan-new-user").hide();
-				$("input[name='city_id']").val("");
-				$("input[name='kecamatan']").val("");
-				$("#city" ).attr( "required", "false" );
+				$(".agent-user").hide();				
+				$("#agent").val($("#agent option:first").val());				
+				$("#agent" ).attr( "required", "false" );
 			}
 		})
 	});

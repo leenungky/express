@@ -16,6 +16,7 @@ class TransactionController extends Controller {
     var $data;
     public function __construct(Request $req){
     	$this->data["type"]= "transaction";        
+        $this->data["req"] = $req;   
     }
 
 	 public function index(Request $req){
@@ -26,8 +27,7 @@ class TransactionController extends Controller {
         $this->data["trans"] = $transDB;
         $this->data["filter"] = $input;
         $helpers = new Helpers();
-        $this->data["helpers"] = new Helpers();        
-        $this->data["req"] = $req;        
+        $this->data["helpers"] = new Helpers();                     
         return view('transaction.index', $this->data);
     }
 
@@ -255,7 +255,7 @@ class TransactionController extends Controller {
         return response()->json($res);    
     }
 
-    public function newtotal(){             
+    public function newtotal(){                     
         return view('transaction.newtotal', $this->data);
     }
 

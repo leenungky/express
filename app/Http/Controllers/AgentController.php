@@ -69,7 +69,8 @@ class AgentController extends Controller {
         $user = DB::table("agent")->where("id" , $id)->delete();
         return redirect('/agent/list')->with('message', "Successfull delete");
     }
-	
+
+    	
 	public function postUpdate($id){	
         $req = $this->data["request"];
 		$validator = Validator::make($req->all(), [            

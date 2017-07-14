@@ -230,13 +230,20 @@ $( document ).ready(function() {
        	autocomplete(url, idelement);
     });
 
-    $("input[name=kecamatan]").keyup(function( event ) {	    		        
-    	var  url =  "/transaction/getkecamatan";
-    	var idelement = "#city";
+     $("#city_name").keyup(function( event ) {		        
+    	var  url =  "/cities/citiesfromkec";
+    	var idelement = "#city_name";
        	autocomplete(url, idelement);
     });
 
+ 
     $("input[name='receive']").bind("keydown", function(event) {
+        if (event.keyCode==13){
+            return false;
+        }
+    });
+
+    $("#city_name").bind("keydown", function(event) {
         if (event.keyCode==13){
             return false;
         }
@@ -851,5 +858,49 @@ function autocomplete(url, idelement){
 	            }
 	    });
    	
+   	}else if (idelement=="#city_name"){   		   	
+	    $(idelement).autocomplete({
+		    source: function( request, response) {            	
+		        if (request.term != "") {
+		             $.ajax({
+		            	url: domain + url,
+		                dataType: "json",
+		                method: "get",
+		                data: {
+		                	nama: request.term
+		                },
+		                success: function (result) {                                                         
+		                	if (result.response.code == "200"){
+		                    	response($.map(result.data, function (item) {                                	
+		                        var name = item.city;
+			                        return {
+			                        	label: name,
+			                            value: name,
+			                            data: item
+			                        }
+		                         }));
+		                    }
+		                }
+		            });
+		        }
+		    },
+		    autoFocus: true,
+		    minLength: 3,
+		    select: function( event, ui ) {
+		    	if (ui.item == null){                    
+		        	$(this).val("");
+		            return false;
+		        }else{
+		        	var data = ui.item.data.name;                    	                    
+		            $(this).val(data);                       
+		        }
+		    },
+		    change: function(event,ui){
+		    	if (ui.item == null){                    
+		        	$(this).val("");
+		            return false;
+		        }
+		    }
+		});	    
    	}
 }

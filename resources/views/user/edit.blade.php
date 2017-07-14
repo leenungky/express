@@ -32,8 +32,7 @@
 		<div class="row">				
 			<div class="col-md-12">		
 				<form method="post" action="/user/update/{{$user->id}}" class="formsubmit">
-					<input type="hidden" name="_token" value="{{ csrf_token() }}">					
-					<input type="hidden" name="city_id" value="{{$user->kecamatan_id}}"/>		
+					<input type="hidden" name="_token" value="{{ csrf_token() }}">										
 					<div class="form-group">
 					    <label for="email">Firstname</label>
 						 <input type="text" class="form-control" id="firstname" name="firstname" placeholder="input username" value="{{$user->first_name}}" required>
@@ -49,6 +48,7 @@
 					<div class="form-group">
 					    <label for="email">Role User</label>
 						<select name="role" class="form-control">
+							<option>Pilih Role</option>
 							@foreach ($role as $key => $value)
 								@if ($value->id==$user->role_id)
 									<option value="{{$value->id}}" selected>{{$value->name}}</option>
@@ -58,9 +58,18 @@
 							@endforeach
 						</select>
 					</div>		
-					<div class="form-group kecamatan-new-user">
-					    <label for="email">Kecamatan</label>
-						<input type="text" class="form-control" id="city" name="kecamatan" placeholder="input kecamatan" value="{{$kecamatan}}">
+					<div class="form-group agent-user">
+					    <label for="email">agent</label>
+						<select name="agent" id="agent" class="form-control">
+							<option>Pilih Agent</option>
+							@foreach ($agent as $key => $value)
+								@if ($value->id==$user->agent_id)
+									<option value="{{$value->id}}" selected>{{$value->name}}</option>
+								@else
+									<option value="{{$value->id}}">{{$value->name}}</option>
+								@endif								
+							@endforeach
+						</select>
 					</div>			
 					<div class="form-group">
 					    <label for="pwd">Password:</label>
@@ -86,19 +95,18 @@
 		$( "input[name=name]" ).focus();
 		var role = $("select[name='role'] option:selected").text();
 		if (role=="staff"){
-			$(".kecamatan-new-user").show();
-			$("#city" ).attr( "required", "true" );
+			$(".agent-user").show();
+			$("#agent" ).attr( "required", "true" );
 		}
 		$("select[name='role']").change(function(){
 			var role = $("select[name='role'] option:selected").text();
 			if (role=="staff"){
-				$(".kecamatan-new-user").show();
-				$("#city" ).attr( "required", "true" );
+				$(".agent-user").show();
+				$("#agent" ).attr( "required", "true" );
 			}else{
-				$(".kecamatan-new-user").hide();
-				$("input[name='city_id']").val("0");
-				$("input[name='kecamatan']").val("");
-				$("#city" ).attr( "required", "false" );
+				$(".agent-user").hide();				
+				$("#agent").val($("#agent option:first").val());				
+				$("#agent" ).attr( "required", "false" );
 			}
 		})
 	});

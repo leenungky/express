@@ -39,14 +39,13 @@
 					</div>					
 					<div class="form-group">
 					    <label for="email">Nama Kota</label>
-						 <input type="text" class="form-control" id="name" name="name" placeholder="input kota" value="{{ old('name') }}" required>
+						 <input type="text" class="form-control" id="city_name" name="name" placeholder="input kota" value="{{ old('name') }}" required>
 					</div>										
 					<button type="submit" class="btn">Submit</button>
 				</form>
 			</div>
 		</div>
 	</div>	    	
-
 </div>
 </body>
 </html>

@@ -341,7 +341,7 @@ label.error{
 	display: inline;
 }
 
-.deliver, .problem, .kecamatan-new-user{
+.deliver, .problem, .agent-user{
 	display: none;
 }
 
