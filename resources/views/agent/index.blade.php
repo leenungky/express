@@ -38,21 +38,26 @@
 						}
 					?>
 					<thead>
-						<th>Code</th>
-			    		<th>City name</th>			    		
+						<th>Name</th>
+			    		<th>City name</th>		
+			    		<th>Phone</th>
+			    		<th>Address</th>			    		
 						<th>Action</th>
 					</thead>
-					<tbody>		
+					<tbody>
 						@foreach ($agent as $key => $value)
 							<tr>
-								<td>{{$value->code}}</td><td>{{$value->name}}</td>
+								<td>{{$value->name}}</td>
+								<td>{{$value->kota}}</td>
+								<td>{{$value->phone}}</td>
+								<td>{{$value->address}}</td>
 								<td>
-									<a href="/cities/edit/{{$value->id}}">
+									<a href="/agent/edit/{{$value->id}}">
 										<span class="edit"> 
 					    					<span class="glyphicon glyphicon-pencil"></span>
 					    				</span>
 				    				</a> | 
-				    				<a href="/cities/delete/{{$value->id}}" class="confirmation">
+				    				<a href="/agent/delete/{{$value->id}}" class="confirmation">
 					    				<span class="delete">
 				    						<span class="glyphicon glyphicon-remove"></span>
 				    				</sp

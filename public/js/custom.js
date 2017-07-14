@@ -801,8 +801,8 @@ function autocomplete(url, idelement){
 	                }
 	            }
 	        });
-		} else if (idelement =="#city")  {
-			$(idelement).autocomplete({
+	} else if (idelement =="#city")  {
+		$(idelement).autocomplete({
 	            source: function( request, response) {            	
 	                if (request.term != "") {
 	                    $.ajax({
@@ -849,7 +849,7 @@ function autocomplete(url, idelement){
 	                    return false;
 	                }
 	            }
-	        });
+	    });
    	
-   		}
-	}
+   	}
+}

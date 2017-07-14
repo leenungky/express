@@ -28,21 +28,27 @@ class AgentController extends Controller {
         return view('agent.index', $this->data);
     }
 
-    public function getAdd(){		
+    public function getAdd(){
+        $cities = DB::table("tb_cities")->get();
+        $this->data["cities"] = $cities;		
 		return view('agent.new', $this->data);  
 	}
 
 	public function getEdit($id){
-		$city = DB::table("tb_cities")->where("id", $id)->first();
-		$this->data["city"] = $city;
-		return view('city.edit', $this->data);  
+		$agent = DB::table("agent")->where("id", $id)->first();
+        $cities = DB::table("tb_cities")->get();
+        $this->data["cities"] = $cities;    
+		$this->data["agent"] = $agent;
+		return view('agent.edit', $this->data); 
 	}
 
 	public function postCreate(){	
 		$req = $this->data["request"];
 	 	$validator = Validator::make($req->all(), [            
-            'code' => 'required|unique:tb_cities|max:100',
-            'name' => 'required|unique:tb_cities'
+            'name' => 'required',
+            'phone' => 'required|unique:agent',
+            'city' => 'required',
+            'address' => 'required',
         ]);
 
         if ($validator->fails()) {            
@@ -50,32 +56,46 @@ class AgentController extends Controller {
         }
         $arrInsert = $req->input();
         $arrInsert["created_at"] = date("Y-m-d h:i:s");
-        unset($arrInsert["_token"]);        
-        DB::table("tb_cities")->insert($arrInsert);        
-        return redirect('/cities/list')->with('message', "Successfull create");			
+        $arrInsert["city_id"] = $arrInsert["city"];
+        unset($arrInsert["_token"]);
+        unset($arrInsert["city"]);        
+        // print_r($arrInsert);
+        // die();
+        DB::table("agent")->insert($arrInsert);        
+        return redirect('/agent/list')->with('message', "Successfull create");			
 	}
+
+    public function getDelete(Request $req, $id){       
+        $user = DB::table("agent")->where("id" , $id)->delete();
+        return redirect('/agent/list')->with('message', "Successfull delete");
+    }
 	
 	public function postUpdate($id){	
-		$req = $this->data["request"];
-        $validator = Validator::make($req->all(), [            
-            'code' => 'required|max:100',
-            'name' => 'required|'
+        $req = $this->data["request"];
+		$validator = Validator::make($req->all(), [            
+            'name' => 'required',
+            'phone' => 'required',
+            'city' => 'required',
+            'address' => 'required',
         ]);
 
         if ($validator->fails()) {            
             return Redirect::to(URL::previous())->withInput(Input::all())->withErrors($validator);            
         }
         $arrUpdate = $req->input();
-        
+        $arrUpdate["city_id"] = $arrUpdate["city"];
+        unset($arrUpdate["city"]);   
         unset($arrUpdate["_token"]);        
-        DB::table("tb_cities")->where("id", $id)->update($arrUpdate);        
-        return redirect('/cities/list')->with('message', "Successfull update");			
+        DB::table("agent")->where("id", $id)->update($arrUpdate);        
+        return redirect('/agent/list')->with('message', "Successfull update");			
 	}
 
 	private function _get_index_filter($filter){
-        $dbcust = DB::table("agent");
+        $dbcust = DB::table("agent")
+            ->select("agent.id","agent.name", "agent.phone", "agent.address", "tb_cities.name as kota")
+            ->join("tb_cities","agent.city_id","=","tb_cities.id", "left");
         if (isset($filter["name"])){
-            $dbcust = $dbcust->where("name", "like", "%".$filter["name"]."%");
+            $dbcust = $dbcust->where("agent.name", "like", "%".$filter["name"]."%");
         }        
         return $dbcust;
     }

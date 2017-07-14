@@ -22,7 +22,7 @@
 				<div class="col-md-12 alert alert-danger">		
 				    <ul>
 				        @foreach($errors->all() as $error) 		            				            
-				            <li>{{str_replace("name","Nama toko",$error)}}</li>
+				            <li>{{$error}}</li>
 				        @endforeach 
 				    </ul>
 			    </div>
@@ -31,15 +31,28 @@
 		<br/>
 		<div class="row">				
 			<div class="col-md-12">		
-				<form method="post" action="/cities/create" class="formsubmit">
+				<form method="post" action="/agent/create" class="formsubmit">
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">					
 					<div class="form-group">
 					    <label for="email">Name</label>
-						 <input type="text" class="form-control" id="code" name="code" placeholder="input code" value="{{ old('code') }}" required>
-					</div>					
+						 <input type="text" class="form-control" id="name" name="name" placeholder="input code" value="{{ old('name') }}" required>
+					</div>
+					<div class="form-group">
+					    <label for="email">City</label>
+						<select name="city" class="form-control" required>
+							<option>Pilih City</option>
+							@foreach ($cities as $key => $value)
+								<option value="{{$value->id}}">{{$value->name}}</option>
+							@endforeach
+						</select>
+					</div>	
 					<div class="form-group">
 					    <label for="email">Phone</label>
-						 <input type="text" class="form-control" id="name" name="name" placeholder="input kota" value="{{ old('name') }}" required>
+						 <input type="text" class="form-control" id="phone" name="phone" placeholder="input phone" value="{{ old('phone') }}" required>
+					</div>		
+					<div class="form-group">
+					    <label for="email">Address</label>
+					    <textarea name="address" cols="3" class="form-control" placeholder="input address" required>{{ old('address') }}</textarea>						 
 					</div>										
 					<button type="submit" class="btn">Submit</button>
 				</form>
