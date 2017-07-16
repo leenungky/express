@@ -15,11 +15,13 @@ class ReportController extends Controller {
     
     var $data;
     public function __construct(Request $req){
-    	$this->data["type"]= "transaction";        
+    	$this->data["type"]= "transaction"; 
+        $this->data["req"] = $req;        
     }
 
 	
-    public function biaya_excel(Request $req){
+    public function biaya_excel(){
+        $req = $this->data["req"];
         $input = $req->input();
         if (isset($input["pelanggan"])){            
             $this->get_data_report($input);
@@ -117,7 +119,8 @@ class ReportController extends Controller {
     }
     
 
-    public function findtoprint(Request $req){
+    public function findtoprint(){
+        $req = $this->data["req"];
         $code = $req->input("order_no", ""); 
         $transactiondb = DB::table("inventory_transaction")->where("order_no", $code)->first();        
         if (isset($transactiondb->kecamatan_id)){
@@ -147,7 +150,8 @@ class ReportController extends Controller {
         return response()->json($res);
     }
 
-    public function getcustomer(Request $req){
+    public function getcustomer(){
+        $req = $this->data["req"];
         $nama = $req->input("nama", "");
         $type = $req->input("type", "");
         $customers = DB::table("inventory_customer")
@@ -163,7 +167,8 @@ class ReportController extends Controller {
         return response()->json($res);    
     }
 
-    public function getkecamatan(Request $req){
+    public function getkecamatan(){
+        $req = $this->data["req"];
         $nama = $req->input("nama", "");           
         $data = DB::select("SELECT *  FROM `tb_rapid_tarif` where city like '%".$nama."%' OR kecamatan like '%".$nama."%'");
         $res = array("response"=>array("code"=>200 , "messsage" => "ok"), "data" => $data);
@@ -181,7 +186,8 @@ class ReportController extends Controller {
         return view('report.biaya', $this->data);
     }
 
-    public function pengiriman(Request $req){
+    public function pengiriman(){
+        $req = $this->data["req"];
         $this->data["parameter"] = $_SERVER['QUERY_STRING'];        
         $this->data["type"]= "Laporan_Pengiriman";
         $input = $req->input();                         
@@ -195,7 +201,8 @@ class ReportController extends Controller {
         return view('report.pengiriman', $this->data);
     }
 
-    public function pengiriman_excel(Request $req){
+    public function pengiriman_excel(){
+        $req = $this->data["req"];
         $input = $req->input();                         
         if (isset($input["from"]) && isset($input["to"])){
             $transDB = $this->_get_laporan_pengiriman($input);            
@@ -260,7 +267,8 @@ class ReportController extends Controller {
 
     }
 
-    public function biaya_pdf(Request $req){
+    public function biaya_pdf(){
+        $req = $this->data["req"];
         $input = $req->input();
         if (isset($input["pelanggan"])){
             $this->get_data_report($input);
@@ -271,7 +279,8 @@ class ReportController extends Controller {
         }
     }
 
-     public function pdfview(Request $req){        
+     public function pdfview(){   
+        $req = $this->data["req"];     
         $input = $req->input();
         if (isset($input["pelanggan"])){
             $this->get_data_report($input);
@@ -287,7 +296,8 @@ class ReportController extends Controller {
         return view('transaction.newtotal', $this->data);
     }
 
-    public function newtrasaction(Request $req){
+    public function newtrasaction(){
+        $req = $this->data["req"];
         $new_parcel_id = $req->session()->get("new_parcel_id", "");          
         $total_parcel_db = DB::table("inventory_customer_total_parcel")->where("id", $new_parcel_id)->first();
         if (!isset($total_parcel_db)){
@@ -309,13 +319,14 @@ class ReportController extends Controller {
         return view('transaction.new', $this->data);
     }
 
-    public function taken(Request $req){
+    public function taken(){
         $this->data["type"] = "Customer_taken";
         return view('transaction.taken', $this->data);
     }
 
 
-    public function update(Request $req, $id){        
+    public function update($id){ 
+        $req = $this->data["req"];       
         $input = $req->input();
         $arrInsert = array(
                 "sender_id" => $input["sender_id"],

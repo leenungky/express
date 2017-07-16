@@ -27,7 +27,8 @@ Route::group(['middleware' => 'logic'], function(){
 	Route::controller('/role', 'RoleController');
 	Route::controller('/cities', 'CityController');
 	Route::controller('/agent', 'AgentController');
-	Route::controller('/collect', 'CollectController');		
+	Route::controller('/collect', 'CollectController');	
+	Route::controller('/price', 'PriceController');		
 });
 
 Route::group(['prefix' => 'auth'], function(){

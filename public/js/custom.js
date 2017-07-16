@@ -273,6 +273,8 @@ $( document ).ready(function() {
     $("input[name='discount']").numeric();
     $("input[name=jam]" ).numeric();
     $("input[name=menit]" ).numeric();
+    $("input[name=oneday_price]" ).numeric();
+    $("input[name=regular_price]" ).numeric();
 
     $('.confirmation').on('click', function () {
         return confirm('Are you sure?');

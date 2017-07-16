@@ -40,7 +40,8 @@ class BusinessLogic
                 || $controller == "ReportController" 
                 || $controller == "CityController"
                 || $controller == "RoleController"
-                || $controller == "CollectController" ){
+                || $controller == "CollectController"
+                || $controller == "PriceController" ){
                 $strRedirect = "/transaction";
             }
         }

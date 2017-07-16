@@ -5,9 +5,7 @@
      @include('head')
 </head>
 <body>
-	<?php use App\Http\Helpers\Helpdesk; ?>
-
- 
+	<?php use App\Http\Helpers\Helpdesk; ?> 
 
 
 	<script type="text/javascript">

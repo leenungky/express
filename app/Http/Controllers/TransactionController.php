@@ -313,11 +313,15 @@ class TransactionController extends Controller {
    
 
     private function _get_index_filter($input){
+        $req = $this->data["req"];
         $transDB = DB::table("inventory_transaction")
             ->select("inventory_transaction.id", "inventory_transaction.reseller", "inventory_transaction.receipt_name", "inventory_transaction.created_at", "inventory_transaction.order_no",
                     "inventory_customer.name", "inventory_transaction.phone", "tb_rapid_tarif.kecamatan", "inventory_transaction.address", "inventory_transaction.weight","inventory_transaction.price","tb_rapid_tarif.city")
             ->leftJoin("inventory_customer", "inventory_customer.id", "=", "inventory_transaction.sender_id")
-            ->leftJoin("tb_rapid_tarif", "tb_rapid_tarif.id", "=", "inventory_transaction.kecamatan_id");                              
+            ->leftJoin("tb_rapid_tarif", "tb_rapid_tarif.id", "=", "inventory_transaction.kecamatan_id");
+        if ($req->session()->get("role")=="staff"){
+            $transDB = $this->_get_role($transDB);
+        }                             
         if(!empty($input["pelanggan"])){
             $transDB = $transDB->where("inventory_customer.name", "like" ,"%".$input["pelanggan"]."%");
         }
@@ -447,6 +451,24 @@ class TransactionController extends Controller {
             $transDB = $transDB->orderBy("inventory_transaction.created_at", "desc");
         }        
                            
+        return $transDB;
+    }
+
+    private function _get_role($transDB){
+        $kecamatan_id_arr = array();
+        $agent_id = \Auth::user()->agent_id;
+        if ($agent_id > 0 ){
+            $agent_city = DB::table("agent")->select("city_id")->where("id", $agent_id)->first(); 
+            if (isset($agent_city->city_id)){
+                $city_kecamatan = DB::table("city_kecamatan")->where('city_id', $agent_city->city_id)->get();
+                    
+                foreach ($city_kecamatan as $key => $value) {
+                    $kecamatan_id_arr[] = $value->kecamatan_id;
+                }       
+            }                
+        }                
+        $transDB = $transDB->whereIn("inventory_transaction.kecamatan_id", $kecamatan_id_arr)
+                ->where("inventory_transaction.iscollect", 1);
         return $transDB;
     }
 

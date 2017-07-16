@@ -93,7 +93,7 @@
                                     </li>                                    
                                     <li role="separator" class="divider"></li>
                                     <li>
-                                        <a href="#">Harga</a>
+                                        <a href="/price/list">Harga</a>
                                     </li>     
                                     <li role="separator" class="divider"></li>
                                     <li>

@@ -234,10 +234,6 @@ table .in{
 	  font-size:13px;
 }
 
-.alert-warning{
-	margin-top: 2%;
-	display: none;
-}
 
 .status-barang{
 	color: #FFF;
@@ -261,12 +257,8 @@ table .in{
 
 .volume{
 	border: 1px solid #ccc;
-  	padding: 20px;
-  	border-bottom: 0px
-}
-
-.alert-info{
-	display: none;
+  	padding: 20px
+;  	border-bottom: 0px
 }
 
 .notif-oneday{
