@@ -89,7 +89,7 @@
                                     <li role="separator" class="divider"></li>
 
                                     <li>
-                                        <a href="#">Karyawan</a>
+                                        <a href="/employ/list">Karyawan</a>
                                     </li>                                    
                                     <li role="separator" class="divider"></li>
                                     <li>
@@ -97,7 +97,7 @@
                                     </li>     
                                     <li role="separator" class="divider"></li>
                                     <li>
-                                        <a href="#">3pl</a>
+                                        <a href="/tpl/list">3pl</a>
                                     </li>                                                          
                                 </ul>
                             </div>                      

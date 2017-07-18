@@ -100,7 +100,7 @@
     	<div class="left" style="text-align: center;width: 100px;">
     		<br/>
     		<div>    				
-    			<span style="font-size: 19px;font-weight: bold;">PopBox</span><br/>
+    			<span style="font-size: 13px;font-weight: bold;">BintangKiriman</span><br/>
     			<span style="font-size: 11px;">Scan barcode ini :</span>
     		</div>
     		<div style="width: 100px;padding: 10px 0px;">
@@ -114,20 +114,8 @@
     	<br/>
     	<div style="clear: both;"></div>
     	<div class="left full-desc" style="width: 350px;font-size: 7px; margin-left: 10px; margin-right: 10px;">    							
-			Untuk keluhan anda bisa menghubungi customer service kami 021-2902 2537 hari senin-sabtu jam 08.00-17.00 atau melalui email : info@popbox.asia
-    	</div>
-    	<div style="clear: both;"></div>    	    		
-
-    	<div class="left" style="padding:10px 50px 0px 120px;">
-    		<img src="/img/line.png" width="20px">@popboxasia
-    	</div> <br/>
-    	<div style="clear: both;"></div>    	    		
-    	<div class="left" style="padding:10px 50px 0px 40px;">
-    		<img src="/img/fb_icon.png" width="20px">PopBox Asia
-    	</div>    		
-    	<div class="left" style="padding:10px;">
-    		<img src="/img/instagram.png" width="20px">popbox_asia    			    			
-    	</div>    		
+			Untuk keluhan anda bisa menghubungi customer service kami 021-2902 2537 hari senin-sabtu jam 08.00-17.00 atau melalui email : daniel@bintangkiriman.com
+    	</div>    	
     	<div style="clear: both;"></div><br/>    		
    	</div>
 </body>

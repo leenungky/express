@@ -263,16 +263,16 @@
 			$countdb = DB::select($sql);	
 			$prefix = "000".($countdb[0]->total+1);
 			$prefix = substr($prefix,-4);		
-			return date("ymd").$prefix;
+		return date("ymd").$prefix;
 		}
 
 		public static function get_rw_build_transaction() {
 	    	$pref = date("ymd");		
-	    	$sql = "SELECT count(*) as total from inventory_transaction  where SUBSTRING(order_no,4,6)='".$pref."'";	
+	    	$sql = "SELECT count(*) as total from inventory_transaction  where SUBSTRING(order_no,1,6)='".$pref."'";	
 			$countdb = DB::select($sql);	
 			$prefix = "000".($countdb[0]->total+1);
 			$prefix = substr($prefix,-4);		
-			return "PAA".date("ymd").$prefix;
+			return date("ymd").$prefix;
 		}
 
 		public static function generateRandomString($length = 4) {

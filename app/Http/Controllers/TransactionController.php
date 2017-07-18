@@ -227,7 +227,7 @@ class TransactionController extends Controller {
             $kecamatan = $kecamatandb->kecamatan;
         }
 
-        $res = array("response"=>array("code"=>200 , "messsage" => "ok"), "data" => $transactiondb,"address" => $address, "kecamatan
+        $res = array("response"=>array("code"=>200 , "messsage" => "ok"), "data" => $transactiondb,"addrses" => $address, "kecamatan
             " => $kecamatan, "qrcode" => $res);
         return response()->json($res);
     }
